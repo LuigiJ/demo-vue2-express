@@ -64,6 +64,36 @@ app.use(hotMiddleware)
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
+// my code ++
+var bodyParser = require('body-parser')
+app.use(bodyParser.json())
+// www-form-urlencoded
+app.use(bodyParser.urlencoded({    
+  extended: true
+}))
+app.post('/json', function (req, res) {
+  console.log(req.body.first)
+  console.log(req.body.last)
+  console.log(req.body.myfile)
+  var response = {
+    "first_name": req.body.first,
+    "last_name": req.body.last,
+    "constom": 'aa'
+  }
+  res.end(JSON.stringify(response))
+})
+app.post('/some', function (req, res) {
+  console.log(req.body.first)
+  console.log(req.body.last)
+  console.log(req.body.myfile)
+  var response = {
+    "first_name": req.body.first,
+    "last_name": req.body.last,
+    "constom": 'aa'
+  }
+  res.end(JSON.stringify(response))
+})
+
 var uri = 'http://localhost:' + port
 
 var _resolve

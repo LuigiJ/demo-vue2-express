@@ -16,16 +16,52 @@
       <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
       <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    </ul> 
+    <form>
+      <input type="text" name="first" v-model="first">
+      <input type="text" name="last" v-model="last">
+    </form>
+    <button @click.prevent="clickHandleJson">点我json</button>
+    <button @click.prevent="clickHandleSome">点我some</button>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      first: '',
+      last: ''
+    }
+  },
+  methods: {
+    clickHandleJson () {
+      axios.post('/json', {
+        first: this.first,
+        last: this.last
+      }).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    clickHandleSome () {
+      axios.post('/some', {
+        first: this.first,
+        last: this.last
+      }, {
+        headers: {
+          // 'content-type': 'multipart/form-data'
+          'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+        }
+      }).then((res) => {
+        console.log(res)
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   }
 }
